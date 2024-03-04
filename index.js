@@ -1,8 +1,13 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import productRoute from './routes/product.route.js'
+import dotenv from 'dotenv'
 
 const app = express()
+dotenv.config()
+
+const URI = process.env.DB_HOST
+const PORT = process.env.PORT || 3000;
 
 //middleware
 app.use(express.json())
@@ -17,11 +22,11 @@ app.get('/', (req, res) => {
 })
 
 
-mongoose.connect('mongodb+srv://thuanlb:oNWBBS6me4JfBSHn@backenddb.trtmzrg.mongodb.net/?retryWrites=true&w=majority&appName=BackendDB')
+mongoose.connect(URI)
   .then(() => {
     console.log('Connected to database !')
     app.listen(3000, () => {
-      console.log('Server is running on port 3000')
+      console.log(`Server is running on http://localhost:${PORT}`)
     })
   })
   .catch(() => {
